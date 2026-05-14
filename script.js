@@ -1,14 +1,24 @@
-const topbar = document.querySelector('.topbar');
-window.addEventListener('scroll', () => {
-  if (window.scrollY > 40) topbar.classList.add('scrolled');
-  else topbar.classList.remove('scrolled');
+
+const citizenImages = [
+  'Image/Grazdanin1.jpg',
+  'Image/Grazdanin2.jpg'
+];
+
+let currentCitizenSlide = 0;
+const citizenImg = document.getElementById('citizen-slider-image');
+
+function updateCitizenSlide() {
+  if (citizenImg) {
+    citizenImg.src = citizenImages[currentCitizenSlide];
+  }
+}
+
+document.querySelector('.slider-btn.next')?.addEventListener('click', () => {
+  currentCitizenSlide = (currentCitizenSlide + 1) % citizenImages.length;
+  updateCitizenSlide();
 });
 
-document.querySelectorAll('a[href^="#"]').forEach(link => {
-  link.addEventListener('click', e => {
-    const target = document.querySelector(link.getAttribute('href'));
-    if (!target) return;
-    e.preventDefault();
-    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  });
+document.querySelector('.slider-btn.prev')?.addEventListener('click', () => {
+  currentCitizenSlide = (currentCitizenSlide - 1 + citizenImages.length) % citizenImages.length;
+  updateCitizenSlide();
 });
